@@ -1,0 +1,3 @@
+intraway_avatar_homepage:
+    path:     /
+    defaults: { _controller: IntrawayAvatarBundle:Default:index }

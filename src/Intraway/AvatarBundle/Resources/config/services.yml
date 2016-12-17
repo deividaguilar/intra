@@ -1,0 +1,4 @@
+services:
+#    intraway_avatar.example:
+#        class: Intraway\AvatarBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
