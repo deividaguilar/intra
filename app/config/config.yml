@@ -20,7 +20,7 @@ framework:
     validation:      { enable_annotations: true }
     #serializer:      { enable_annotations: true }
     serializer:
-        enable: true
+        enabled: true
     templating:
         engines: ['twig']
     default_locale:  "%locale%"
@@ -71,3 +71,10 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+fos_rest:
+    format_listener:
+        enabled: true
+        rules:
+            - { path: '^/api/', priorities: ['xml', 'json'], fallback_format: json, prefer_extension: false }
+            - { path: '^/', stop: true }
