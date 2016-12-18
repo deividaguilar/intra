@@ -1,6 +1,10 @@
 intraway_avatar_homepage:
+    path:     /
+    defaults: { _controller: IntrawayAvatarBundle:Default:index}
+
+intraway_avatar_api:
     path:     /avatars/{id}
-    defaults: { _controller: IntrawayAvatarBundle:Default:index, id: 9999}
+    defaults: { _controller: IntrawayAvatarBundle:ApiRest:index, id: 9999}
     requirements:
         id : \d+
     methods:  [GET]
