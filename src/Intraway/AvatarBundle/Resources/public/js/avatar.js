@@ -6,7 +6,7 @@
 
 $(document).ready(function () {
 
-    $(".estiloGifLoad").hide();
+    $("#capaLoad").hide();
 
     $("#dialogo").dialog(
             {
