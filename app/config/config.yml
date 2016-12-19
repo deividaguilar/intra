@@ -77,5 +77,5 @@ fos_rest:
     format_listener:
         enabled: true
         rules:
-            - { path: '^/api/', priorities: ['xml', 'json'], fallback_format: json, prefer_extension: false }
+            - { path: '^/avatars', priorities: ['json'], fallback_format: json, prefer_extension: false }
             - { path: '^/', stop: true }
