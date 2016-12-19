@@ -5,12 +5,30 @@
  */
 
 $(document).ready(function () {
+
+    $(".estiloGifLoad").hide();
+
+    $("#dialogo").dialog(
+            {
+                autoOpen: false,
+                height: 350,
+                width: 350,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                }
+            });
+
     $("#accordion").accordion();
 
     $("#fileuploader").uploadFile({
         url: "Excel/uploadfileTipCal.php",
         method: 'POST',
-        allowedTypes: "xlsx",
+        allowedTypes: "jpeg, png, gif, bmp",
         fileName: $("#filename").val(),
         dynamicFormData: function () {
             var data = {
