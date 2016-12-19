@@ -39,10 +39,10 @@ $(document).ready(function () {
         },
         returnType: "json",
         onSubmit: function () {
-            $(".estiloGifLoad").show();
+            $("#capaLoad").show();
         },
         onSuccess: function (files, data, xhr) {
-            $(".estiloGifLoad").hide();
+            $("#capaLoad").hide();
             if (data.error != '') {
                 $("#dialogo").html(data.error);
             } else {
@@ -51,7 +51,7 @@ $(document).ready(function () {
             $("#dialogo").dialog("open");
         },
         onError: function () {
-            $(".estiloGifLoad").hide();
+            $("#capaLoad").hide();
         }
     });
 });
