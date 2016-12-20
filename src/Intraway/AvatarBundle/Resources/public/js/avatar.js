@@ -26,32 +26,33 @@ $(document).ready(function () {
     $("#accordion").accordion();
 
     $("#fileuploader").uploadFile({
-        url: "Excel/uploadfileTipCal.php",
+        url: "avatars/",
         method: 'POST',
-        allowedTypes: "jpeg, png, gif, bmp",
-        fileName: $("#filename").val(),
-        dynamicFormData: function () {
-            var data = {
-                tipo: $("#hddTipo").val(),
-                evento: "cargarArchivo"
-            };
-            return data;
-        },
+        allowedTypes: "jpg, png, gif, bmp",
+        fileName: 'uploadFiles',
+//        dynamicFormData: function () {
+//            var data = {
+//                tipo: $("#hddTipo").val(),
+//                evento: "cargarArchivo"
+//            };
+//            return data;
+//        },
         returnType: "json",
         onSubmit: function () {
             $("#capaLoad").show();
         },
         onSuccess: function (files, data, xhr) {
             $("#capaLoad").hide();
-            if (data.error != '') {
-                $("#dialogo").html(data.error);
-            } else {
-                $("#dialogo").html(data.correcto);
-            }
+
+            $("#dialogo").html(data.message);
+
             $("#dialogo").dialog("open");
         },
-        onError: function () {
+        onError: function (files, status, errMsg, pd) {
             $("#capaLoad").hide();
+            $("#dialogo").html(errMsg);
+
+            $("#dialogo").dialog("open");
         }
     });
 });
