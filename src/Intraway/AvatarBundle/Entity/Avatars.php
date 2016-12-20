@@ -123,4 +123,91 @@ class Avatars
     {
         return $this->size;
     }
+    /**
+     * @var integer
+     */
+    private $sizefile;
+
+    /**
+     * @var string
+     */
+    private $extension;
+
+
+    /**
+     * Set sizefile
+     *
+     * @param integer $sizefile
+     *
+     * @return Avatars
+     */
+    public function setSizefile($sizefile)
+    {
+        $this->sizefile = $sizefile;
+
+        return $this;
+    }
+
+    /**
+     * Get sizefile
+     *
+     * @return integer
+     */
+    public function getSizefile()
+    {
+        return $this->sizefile;
+    }
+
+    /**
+     * Set extension
+     *
+     * @param string $extension
+     *
+     * @return Avatars
+     */
+    public function setExtension($extension)
+    {
+        $this->extension = $extension;
+
+        return $this;
+    }
+
+    /**
+     * Get extension
+     *
+     * @return string
+     */
+    public function getExtension()
+    {
+        return $this->extension;
+    }
+    /**
+     * @var string
+     */
+    private $name;
+
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Avatars
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 }

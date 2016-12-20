@@ -28,4 +28,21 @@ Intraway\AvatarBundle\Entity\Avatars:
             nullable: false
             options:
                 unsigned: false
+        sizefile:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        extension:
+            type: string
+            nullable: false
+            length: 5
+            options:
+                fixed: false
+        name:
+            type: string
+            nullable: false
+            length: 256
+            options:
+                fixed: false
     lifecycleCallbacks: {  }
