@@ -124,4 +124,3 @@ class Avatars
         return $this->size;
     }
 }
-
