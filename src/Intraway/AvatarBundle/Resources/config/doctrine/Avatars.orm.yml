@@ -8,8 +8,8 @@ Intraway\AvatarBundle\Entity\Avatars:
             options:
                 unsigned: false
             id: true
-#            generator:
-#                strategy: IDENTITY
+            generator:
+                strategy: IDENTITY
     fields:
         image:
             type: blob
