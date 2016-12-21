@@ -23,7 +23,22 @@ $(document).ready(function () {
                 }
             });
 
-    $("#accordion").accordion();
+    var icons = {
+        header: "ui-icon-circle-arrow-e",
+        activeHeader: "ui-icon-circle-arrow-s"
+    };
+    $("#accordion").accordion({
+        icons: icons,
+        heightStyle: "content"
+    });
+    $("#toggle").button().on("click", function () {
+        if ($("#accordion").accordion("option", "icons")) {
+            $("#accordion").accordion("option", "icons", null);
+        } else {
+            $("#accordion").accordion("option", "icons", icons);
+        }
+    });
+
 
     $("#fileuploader").uploadFile({
         url: "avatars/",
@@ -38,6 +53,7 @@ $(document).ready(function () {
 //            return data;
 //        },
         returnType: "json",
+        showDone: true,
         onSubmit: function () {
             $("#capaLoad").show();
         },
@@ -54,5 +70,45 @@ $(document).ready(function () {
 
             $("#dialogo").dialog("open");
         }
+    });
+
+    $("#selectAvatar").click(function () {
+        $.ajax({
+            type: "GET",
+            datatype: "json",
+            url: "avatars/1",
+            data: {tipo: $("#tipo").val()},
+            beforeSend: function () {
+                $("#capaLoad").show();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $("#capaLoad").hide();
+                $("#dialogo").html(textStatus + ' ' + errorThrown);
+                $("#dialogo").dialog("open");
+            },
+            success: function (data, textStatus, jqXHR)
+            {
+                $("#capaLoad").hide();
+                $("#div_gridAvatar").empty();
+                $.each(data, function (index, value) {
+                    var myImage = $('<img/>');
+                    myImage.attr({
+//                        title: 'Expediente:' + value.expediente + ', Archivo:' + value.archivo + ', Folio:' + value.folio + ', folder:' + value.folder,
+//                        onclick: 'renderImg(\'' + value.db + '\',\'' + value.archivo + '\',\'' + value.expediente + '\',\'' + value.folio + '\',\'' + value.folder + '\');'
+                        height: value.size,
+                        width: value.size
+                    });
+                    myImage.prop('src', 'data:' + value.mimetype + ';base64,' + value.image);
+                    myImage.css({
+                        'cursor': 'pointer',
+                        'border-style': 'solid',
+                        'border-width': '3px',
+                        'border-color': '#2E9AFE'
+                    });
+                    $("#div_gridAvatar").append(myImage);
+                });
+
+            }
+        });
     });
 });
