@@ -69,6 +69,10 @@ $(document).ready(function () {
             $("#dialogo").html(errMsg);
 
             $("#dialogo").dialog("open");
+        },
+        onCancel: function (files, pd) {
+            $("#capaLoad").hide();
+            $("#dialogo").html(files + ' ' + pd);
         }
     });
 
