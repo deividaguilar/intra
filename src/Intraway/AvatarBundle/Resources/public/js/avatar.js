@@ -54,8 +54,14 @@ $(document).ready(function () {
 //        },
         returnType: "json",
         showDone: true,
+        showAbort: false,
+        maxFileSize: 1000000,
         onSubmit: function () {
             $("#capaLoad").show();
+        },
+        onCancel: function (files, pd) {
+            $("#capaLoad").hide();
+            $("#dialogo").html(files + ' ' + pd);
         },
         onSuccess: function (files, data, xhr) {
             $("#capaLoad").hide();
@@ -69,10 +75,6 @@ $(document).ready(function () {
             $("#dialogo").html(errMsg);
 
             $("#dialogo").dialog("open");
-        },
-        onCancel: function (files, pd) {
-            $("#capaLoad").hide();
-            $("#dialogo").html(files + ' ' + pd);
         }
     });
 
