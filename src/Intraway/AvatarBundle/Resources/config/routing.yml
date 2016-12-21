@@ -9,7 +9,7 @@ intraway_avatar_upload:
 
 intraway_avatar_api:
     path:     /avatars/{opt}
-    defaults: { _controller: IntrawayAvatarBundle:ApiRest:index}
+    defaults: { _controller: IntrawayAvatarBundle:ApiRest:index, opt: 1}
     requirements:
         id : \d+
     methods:  [GET]
