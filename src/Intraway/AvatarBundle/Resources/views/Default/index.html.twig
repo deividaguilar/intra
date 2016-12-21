@@ -10,45 +10,75 @@
 
 {% block body %}
     <div class="container-fluid">
-        <div id="accordion">
-            <h3>Load Avatar</h3>
-            <div>
-                <div><label> Cargar Imagenes:</label></div>
-                <div id="fileuploader">Cargar</div>
-                <div id="respuesta">
+        <div class="card">
+            <div class="card-header">Avatars</div>
+            <div class="card-block">
+                <div id="accordion">
+                    <h3>Upload Avatar</h3>
+                    <div>
+                        <div><label> Upload Avatar:</label></div>
+                        <div id="fileuploader">Load</div>
+                        <div id="respuesta">
+                        </div>
+                    </div>
+                    <h3 id="selectAvatar">Select Avatar</h3>
+                    <div>
+                        <div class="row">
+                            <div class="col col-lg-3 col-sm-3 col-md-3 col-xs-3 card">
+                                <div class="card-header">
+                                    Your Avatar
+                                </div>
+                                <div id="div_imgUsr" class="card-block">
+
+                                </div>
+                            </div>
+                            <div class="col col-lg-9 col-sm-9 col-md-9 col-xs-9  card">
+                                <div class="card-header">
+                                    Enter your Email
+                                </div>
+                                <div class="card-block">
+                                    <input id="inpt_email" name="inpt_email" type="email" class="form-control" placeholder="Email" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-lg-12 col-sm-12 col-md-12 col-xs-12 card">
+                                <div class="card-header">
+                                    Select your Avatar
+                                </div>
+                                <div id="div_gridAvatar" class="card-block">
+                                </div>
+                                <div class="card-footer">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3>Delete Avatar</h3>
+                    <div>
+                        <p>
+                            Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
+                            Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero
+                            ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
+                            lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
+                        </p>
+                        <ul>
+                            <li>List item one</li>
+                            <li>List item two</li>
+                            <li>List item three</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <h3>Select Avatar</h3>
-            <div>
-                <p>
-                    Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
-                    purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
-                    velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
-                    suscipit faucibus urna.
-                </p>
-            </div>
-            <h3>Delete Avatar</h3>
-            <div>
-                <p>
-                    Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
-                    Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero
-                    ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
-                    lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
-                </p>
-                <ul>
-                    <li>List item one</li>
-                    <li>List item two</li>
-                    <li>List item three</li>
-                </ul>
+                <div id="capaLoad" style="z-index: 20;
+                     position: absolute; 
+                     left: 40%;
+                     top: 40%;">
+                    <img src="{{ asset('bundles/IntrawayAvatar/images/box.gif') }}" alt="Cargando"/>
+                </div>
+                <div id="dialogo"></div>
             </div>
         </div>
-        <div id="capaLoad" style="z-index: 20;
-             position: absolute; 
-             left: 40%;
-             top: 40%;">
-            <img src="{{ asset('bundles/IntrawayAvatar/images/box.gif') }}" alt="Cargando"/>
-        </div>
-        <div id="dialogo"></div>
+
     </div>
 {% endblock %}
 
