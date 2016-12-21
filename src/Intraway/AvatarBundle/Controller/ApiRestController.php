@@ -16,11 +16,46 @@ class ApiRestController extends FOSRestController {
     private $imgSize;
     private $imgExten;
 
-    public function indexAction($id) {
+    public function indexAction($opt) {
 //        return $this->render('IntrawayAvatarBundle:Default:index.html.twig');
+
         $view = View::create();
-        $view->setData(array("id" => $id, "nombre" => "cristian"));
+        $view->setData($this->selectOption($opt));
         return $this->handleView($view);
+    }
+
+    private function selectOption($opt) {
+        switch ($opt) {
+            case 1:
+                $data = $this->showAvatares();
+                break;
+            case 2 :
+                $data = "";
+                break;
+        }
+        return $data;
+    }
+
+    private function showAvatares() {
+        $rows = $this->getDoctrine()
+                ->getRepository("IntrawayAvatarBundle:Avatars")
+                ->findAll();
+        return empty($rows) ? NULL : $this->createObjAvatar($rows);
+    }
+
+    private function createObjAvatar($rows) {
+        $salida = array();
+        foreach ($rows as $objAvatar) {
+            $avatar = [];
+            $avatar['image'] = stream_get_contents($objAvatar->getImage());
+            $avatar['mimetype'] = $objAvatar->getMimetype();
+            $avatar['size'] = $objAvatar->getSize();
+            $avatar['sizefile'] = $objAvatar->getSizefile();
+            $avatar['extension'] = $objAvatar->getExtension();
+            $avatar['name'] = $objAvatar->getName();
+            $salida[$objAvatar->getId()] = $avatar;
+        }
+        return $salida;
     }
 
     public function uploadAction(Request $request) {
