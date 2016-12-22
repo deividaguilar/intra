@@ -1,0 +1,29 @@
+Intraway\AvatarBundle\Entity\Emails:
+    type: entity
+    table: emails
+    indexes:
+        idAvatar:
+            columns:
+                - idAvatar
+    id:
+        hashmd5:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+            id: true
+#            generator:
+#                strategy: IDENTITY
+    manyToOne:
+        idavatar:
+            targetEntity: Avatars
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: emails
+            joinColumns:
+                idAvatar:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
