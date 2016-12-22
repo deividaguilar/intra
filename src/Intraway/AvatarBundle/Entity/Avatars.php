@@ -210,4 +210,33 @@ class Avatars
     {
         return $this->name;
     }
+    /**
+     * @var string
+     */
+    private $thumb;
+
+
+    /**
+     * Set thumb
+     *
+     * @param string $thumb
+     *
+     * @return Avatars
+     */
+    public function setThumb($thumb)
+    {
+        $this->thumb = $thumb;
+
+        return $this;
+    }
+
+    /**
+     * Get thumb
+     *
+     * @return string
+     */
+    public function getThumb()
+    {
+        return $this->thumb;
+    }
 }
