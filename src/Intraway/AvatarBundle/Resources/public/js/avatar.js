@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+var objAvatar = {};
 $(document).ready(function () {
 
     $("#capaLoad").hide();
@@ -79,11 +80,14 @@ $(document).ready(function () {
     });
 
     $("#selectAvatar").click(function () {
+        $("#div_gridAvatar").empty();
+        $("#div_imgUsr").empty();
+        $("#inpt_idAvatar").val('');
+        $("#inpt_email").val('');
         $.ajax({
             type: "GET",
             datatype: "json",
             url: "avatars/1",
-            data: {tipo: $("#tipo").val()},
             beforeSend: function () {
                 $("#capaLoad").show();
             },
@@ -95,16 +99,17 @@ $(document).ready(function () {
             success: function (data, textStatus, jqXHR)
             {
                 $("#capaLoad").hide();
-                $("#div_gridAvatar").empty();
+                objAvatar = data;
                 $.each(data, function (index, value) {
                     var myImage = $('<img/>');
                     myImage.attr({
-//                        title: 'Expediente:' + value.expediente + ', Archivo:' + value.archivo + ', Folio:' + value.folio + ', folder:' + value.folder,
-//                        onclick: 'renderImg(\'' + value.db + '\',\'' + value.archivo + '\',\'' + value.expediente + '\',\'' + value.folio + '\',\'' + value.folder + '\');'
+                        title: 'Name:' + value.name + ', Size File:' + value.sizefile + ', MimeType:' + value.mimetype,
+                        onclick: 'selectAvatar( ' + index + ' );',
                         height: value.size,
-                        width: value.size
+                        width: value.size,
+                        class: 'img-thumbnail'
                     });
-                    myImage.prop('src', 'data:' + value.mimetype + ';base64,' + value.image);
+                    myImage.prop('src', 'data:' + value.mimetype + ';base64,' + value.thumb);
                     myImage.css({
                         'cursor': 'pointer',
                         'border-style': 'solid',
@@ -117,4 +122,98 @@ $(document).ready(function () {
             }
         });
     });
+
+    $("#btn_search").click(function () {
+        if (validateEmail($("#inpt_email").val()) == false || $("#inpt_email").val() == '') {
+            $("#dialogo").html('Email invalid');
+            $("#dialogo").dialog("open");
+            return false;
+        }
+        $.ajax({
+            type: "GET",
+            datatype: "json",
+            url: "avatars/2",
+            data: {
+                idAvatar: $("#inpt_idAvatar").val(),
+                email: $.md5($("#inpt_email").val())
+            },
+            beforeSend: function () {
+                $("#capaLoad").show();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $("#capaLoad").hide();
+                $("#dialogo").html(textStatus + ' ' + errorThrown);
+                $("#dialogo").dialog("open");
+            },
+            success: function (data, textStatus, jqXHR)
+            {
+                $("#capaLoad").hide();
+                selectAvatar(data.img);
+                $("#dialogo").html(data.message);
+                $("#dialogo").dialog("open");
+
+            }
+        });
+    });
+
+    $("#btn_save").click(function () {
+
+        if (validateEmail($("#inpt_email").val()) == false || $("#inpt_email").val() == '') {
+            $("#dialogo").html('Email invalid');
+            $("#dialogo").dialog("open");
+            return false;
+        }
+        $.ajax({
+            type: "GET",
+            datatype: "json",
+            url: "avatars/3",
+            data: {
+                idAvatar: $("#inpt_idAvatar").val(),
+                email: $.md5($("#inpt_email").val())
+            },
+            beforeSend: function () {
+                $("#capaLoad").show();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $("#capaLoad").hide();
+                $("#dialogo").html(textStatus + ' ' + errorThrown);
+                $("#dialogo").dialog("open");
+            },
+            success: function (data, textStatus, jqXHR)
+            {
+                $("#capaLoad").hide();
+                selectAvatar(data.img);
+                $("#dialogo").html(data.message);
+                $("#dialogo").dialog("open");
+
+            }
+        });
+    });
+
+
 });
+
+function selectAvatar(id) {
+    var avatar = objAvatar[id];
+    var imgUsr = $('<img/>');
+    imgUsr.prop('src', 'data:' + avatar.mimetype + ';base64,' + avatar.image);
+
+    imgUsr.attr({
+        title: 'Name:' + avatar.name + ', Size File:' + avatar.sizefile + ', MimeType:' + avatar.mimetype,
+        class: 'img-fluid'
+    });
+
+    imgUsr.css({
+        'cursor': 'pointer',
+        'border-style': 'solid',
+        'border-width': '3px',
+        'border-color': '#2E9AFE'
+    });
+    $("#div_imgUsr").html(imgUsr);
+    $("#inpt_idAvatar").val(id);
+}
+
+function validateEmail(email) {
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    return emailReg.test(email);
+}
