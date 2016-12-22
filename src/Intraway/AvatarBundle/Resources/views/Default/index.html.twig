@@ -37,7 +37,12 @@
                                     Enter your Email
                                 </div>
                                 <div class="card-block">
-                                    <input id="inpt_email" name="inpt_email" type="email" class="form-control" placeholder="Email" />
+                                    <input id="inpt_email" name="inpt_email" type="email" class="form-control" placeholder="Email" required/>
+                                </div>
+                                <div class="card-footer">
+                                    <input type="hidden" value="" id="inpt_idAvatar" name="inpt_idAvatar" />
+                                    <button id="btn_search" type="button" class="btn btn-primary">Search</button>
+                                    <button id="btn_save" type="button" class="btn btn-success">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -49,7 +54,7 @@
                                 <div id="div_gridAvatar" class="card-block">
                                 </div>
                                 <div class="card-footer">
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -83,6 +88,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('bundles/IntrawayAvatar/js/jquery.md5.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/IntrawayAvatar/jquery-upload/js/jquery.uploadfile.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/IntrawayAvatar/js/avatar.js') }}" type="text/javascript"></script>
 {% endblock %}
