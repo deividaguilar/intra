@@ -6,6 +6,7 @@
 
 {% block stylesheets %}
     <link href="{{ asset('bundles/IntrawayAvatar/jquery-upload/css/uploadfile.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('bundles/IntrawayAvatar/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block body %}
@@ -43,6 +44,7 @@
                                     <input type="hidden" value="" id="inpt_idAvatar" name="inpt_idAvatar" />
                                     <button id="btn_search" type="button" class="btn btn-primary">Search</button>
                                     <button id="btn_save" type="button" class="btn btn-success">Save</button>
+                                    <button id="btn_clear" type="button" class="btn btn-info">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -59,20 +61,6 @@
                             </div>
                         </div>
                     </div>
-                    <h3>Delete Avatar</h3>
-                    <div>
-                        <p>
-                            Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
-                            Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero
-                            ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
-                            lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
-                        </p>
-                        <ul>
-                            <li>List item one</li>
-                            <li>List item two</li>
-                            <li>List item three</li>
-                        </ul>
-                    </div>
                 </div>
                 <div id="capaLoad" style="z-index: 20;
                      position: absolute; 
@@ -80,7 +68,10 @@
                      top: 40%;">
                     <img src="{{ asset('bundles/IntrawayAvatar/images/box.gif') }}" alt="Cargando"/>
                 </div>
-                <div id="dialogo"></div>
+                <div id="dialogo" title="Response"></div>
+                <div id="confirm" style="display: none;" title="Delete Avatar">
+                    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>This item will be permanently deleted and cannot be recovered. Are you sure?</p>
+                </div>
             </div>
         </div>
 

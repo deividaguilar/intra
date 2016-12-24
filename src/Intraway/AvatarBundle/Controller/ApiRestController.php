@@ -40,11 +40,35 @@ class ApiRestController extends FOSRestController {
             case 3 :
                 $data = $this->saveData();
                 break;
+            case 4 :
+                $data = $this->deleteAvatar();
+                break;
         }
         return $data;
     }
 
-    private function searchAvatar() {
+    private function deleteAvatar() {
+
+        $avatar = $this->getDoctrine()->getRepository("IntrawayAvatarBundle:Avatars")->find($this->getRequest()->get('idAvatar'));
+
+
+        if ($avatar->getName() != 'empty.jpg') {
+            try {
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->remove($avatar);
+                $em->flush();
+                $message = array("message" => "Avatar deleted", "code" => 1);
+            } catch (\Doctrine\DBAL\DBALException $e) {
+                $message = array("message" => "This avatar can't be deleted because it has relation with an email.", "code" => 2);
+            }
+        } else {
+            $message = array("message" => "This avatar can't be deleted. ", "code" => 3);
+        }
+
+        return $message;
+    }
+
+    public function searchAvatar() {
 
         $email = $this->getDoctrine()
                         ->getRepository("IntrawayAvatarBundle:Emails")->find($this->getRequest()->get('email'));
@@ -54,7 +78,6 @@ class ApiRestController extends FOSRestController {
         } else {
             return array("message" => "Data found", "img" => $email->getIdavatar()->getId());
         }
-//        return $this->insertEmail($avatar, $this->getRequest()->get('email'), $email);
     }
 
     private function saveData() {
@@ -131,7 +154,7 @@ class ApiRestController extends FOSRestController {
 
     private function createThumImg($file) {
 
-        $percent = 0.5;
+        $percent = 0.3;
         list($width, $height) = getimagesize($file);
         $newwidth = $width * $percent;
         $newheight = $height * $percent;

@@ -45,4 +45,10 @@ Intraway\AvatarBundle\Entity\Avatars:
             length: 256
             options:
                 fixed: false
+        thumb:
+            type: blob
+            nullable: false
+            length: null
+            options:
+                fixed: false
     lifecycleCallbacks: {  }

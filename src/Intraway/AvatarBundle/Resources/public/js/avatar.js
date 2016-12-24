@@ -46,13 +46,6 @@ $(document).ready(function () {
         method: 'POST',
         allowedTypes: "jpg, png, gif, bmp",
         fileName: 'uploadFiles',
-//        dynamicFormData: function () {
-//            var data = {
-//                tipo: $("#hddTipo").val(),
-//                evento: "cargarArchivo"
-//            };
-//            return data;
-//        },
         returnType: "json",
         showDone: true,
         showAbort: false,
@@ -67,9 +60,6 @@ $(document).ready(function () {
         onSuccess: function (files, data, xhr) {
             $("#capaLoad").hide();
 
-            $("#dialogo").html(data.message);
-
-            $("#dialogo").dialog("open");
         },
         onError: function (files, status, errMsg, pd) {
             $("#capaLoad").hide();
@@ -105,6 +95,7 @@ $(document).ready(function () {
                     myImage.attr({
                         title: 'Name:' + value.name + ', Size File:' + value.sizefile + ', MimeType:' + value.mimetype,
                         onclick: 'selectAvatar( ' + index + ' );',
+                        id: 'img_' + index,
                         height: value.size,
                         width: value.size,
                         class: 'img-thumbnail'
@@ -116,11 +107,22 @@ $(document).ready(function () {
                         'border-width': '3px',
                         'border-color': '#2E9AFE'
                     });
-                    $("#div_gridAvatar").append(myImage);
+                    var myDiv = $('<div>').attr({
+                        id: "imgDiv_" + index
+                    }).addClass("col col-lg-2 col-sm-2 col-md-2 col-xs-2 card");
+                    $("#div_gridAvatar").append(myDiv);
+                    $("#imgDiv_" + index).append(myImage);
+                    $("#imgDiv_" + index).append('<div class="card-footer"><i style="cursor: pointer;" class="fa fa-trash" aria-hidden="true" onclick="confirmDeleteAvatar(' + index + ');"></i></div>');
                 });
 
             }
         });
+    });
+
+    $("#btn_clear").click(function () {
+        $("#inpt_email").val('');
+        $("#inpt_idAvatar").val('');
+        $("#div_imgUsr").empty();
     });
 
     $("#btn_search").click(function () {
@@ -216,4 +218,51 @@ function selectAvatar(id) {
 function validateEmail(email) {
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     return emailReg.test(email);
+}
+
+function confirmDeleteAvatar(id) {
+    $("#confirm").dialog({
+        resizable: false,
+        height: "auto",
+        width: 400,
+        modal: true,
+        buttons: {
+            "Delete item": function () {
+                deleteAvatar(id);
+                $(this).dialog("close");
+            },
+            Cancel: function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+}
+
+function deleteAvatar(id) {
+    $.ajax({
+        type: "GET",
+        datatype: "json",
+        url: "avatars/4",
+        data: {
+            idAvatar: id
+        },
+        beforeSend: function () {
+            $("#capaLoad").show();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $("#capaLoad").hide();
+            $("#dialogo").html(textStatus + ' ' + errorThrown);
+            $("#dialogo").dialog("open");
+        },
+        success: function (data, textStatus, jqXHR)
+        {
+            $("#capaLoad").hide();
+            if (data.code == 1) {
+                $("#imgDiv_" + id).remove();
+            }
+            $("#dialogo").html(data.message);
+            $("#dialogo").dialog("open");
+
+        }
+    });
 }
