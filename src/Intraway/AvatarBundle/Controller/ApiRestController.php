@@ -52,7 +52,7 @@ class ApiRestController extends FOSRestController {
         $avatar = $this->getDoctrine()->getRepository("IntrawayAvatarBundle:Avatars")->find($this->getRequest()->get('idAvatar'));
 
 
-        if ($avatar->getName() != 'empty.jpg') {
+        if ($avatar->getId() != 1) {
             try {
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->remove($avatar);
@@ -108,7 +108,7 @@ class ApiRestController extends FOSRestController {
 
     private function imgDefault() {
         $avatar = $this->getDoctrine()
-                        ->getRepository("IntrawayAvatarBundle:Avatars")->findBy(array("name" => 'empty.jpg'));
+                        ->getRepository("IntrawayAvatarBundle:Avatars")->findBy(array("id" => 1));
         return $avatar;
     }
 
