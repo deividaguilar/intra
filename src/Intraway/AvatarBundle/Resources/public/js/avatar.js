@@ -59,6 +59,10 @@ $(document).ready(function () {
         },
         onSuccess: function (files, data, xhr) {
             $("#capaLoad").hide();
+            if (data.message != "Image saved correctly") {
+                $("#dialogo").html(data.message);
+                $("#dialogo").dialog("open");
+            }
 
         },
         onError: function (files, status, errMsg, pd) {
