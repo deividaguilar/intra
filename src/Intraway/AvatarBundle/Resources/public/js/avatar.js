@@ -74,53 +74,13 @@ $(document).ready(function () {
     });
 
     $("#selectAvatar").click(function () {
-        $("#div_gridAvatar").empty();
-        $("#div_imgUsr").empty();
-        $("#inpt_idAvatar").val('');
-        $("#inpt_email").val('');
-        $.ajax({
-            type: "GET",
-            datatype: "json",
-            url: "avatars/1",
-            beforeSend: function () {
-                $("#capaLoad").show();
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                $("#capaLoad").hide();
-                $("#dialogo").html(textStatus + ' ' + errorThrown);
-                $("#dialogo").dialog("open");
-            },
-            success: function (data, textStatus, jqXHR)
-            {
-                $("#capaLoad").hide();
-                objAvatar = data;
-                $.each(data, function (index, value) {
-                    var myImage = $('<img/>');
-                    myImage.attr({
-                        title: 'Name:' + value.name + ', Size File:' + value.sizefile + ', MimeType:' + value.mimetype,
-                        onclick: 'selectAvatar( ' + index + ' );',
-                        id: 'img_' + index,
-                        height: value.size,
-                        width: value.size,
-                        class: 'img-thumbnail'
-                    });
-                    myImage.prop('src', 'data:' + value.mimetype + ';base64,' + value.thumb);
-                    myImage.css({
-                        'cursor': 'pointer',
-                        'border-style': 'solid',
-                        'border-width': '3px',
-                        'border-color': '#2E9AFE'
-                    });
-                    var myDiv = $('<div>').attr({
-                        id: "imgDiv_" + index
-                    }).addClass("col col-lg-2 col-sm-2 col-md-2 col-xs-2 card");
-                    $("#div_gridAvatar").append(myDiv);
-                    $("#imgDiv_" + index).append(myImage);
-                    $("#imgDiv_" + index).append('<div class="card-footer"><i style="cursor: pointer;" class="fa fa-trash" aria-hidden="true" onclick="confirmDeleteAvatar(' + index + ');"></i></div>');
-                });
-
-            }
-        });
+        showAvatars(calcIni("ini"));
+    });
+    $("#btn_left").click(function () {
+        showAvatars(calcIni("left"));
+    });
+    $("#btn_right").click(function () {
+        showAvatars(calcIni("right"));
     });
 
     $("#btn_clear").click(function () {
@@ -263,10 +223,88 @@ function deleteAvatar(id) {
             $("#capaLoad").hide();
             if (data.code == 1) {
                 $("#imgDiv_" + id).remove();
+                if (id == $("#inpt_idAvatar").val()) {
+                    $("#inpt_idAvatar").val('');
+                    $("#div_imgUsr").empty();
+                }
             }
             $("#dialogo").html(data.message);
             $("#dialogo").dialog("open");
 
         }
     });
+}
+
+function showAvatars(mxImg) {
+    $("#div_gridAvatar").empty();
+    $("#div_imgUsr").empty();
+    $("#inpt_idAvatar").val('');
+    $("#inpt_email").val('');
+    $.ajax({
+        type: "GET",
+        datatype: "json",
+        url: "avatars/1",
+        data: {
+            ini: $("#inpt_ini").val(),
+            mxImg: mxImg
+        },
+        beforeSend: function () {
+            $("#capaLoad").show();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $("#capaLoad").hide();
+            $("#dialogo").html(textStatus + ' ' + errorThrown);
+            $("#dialogo").dialog("open");
+        },
+        success: function (data, textStatus, jqXHR)
+        {
+            $("#capaLoad").hide();
+            objAvatar = data;
+            $.each(data, function (index, value) {
+                var myImage = $('<img/>');
+                myImage.attr({
+                    title: 'Name:' + value.name + ', Size File:' + value.sizefile + ', MimeType:' + value.mimetype,
+                    onclick: 'selectAvatar( ' + index + ' );',
+                    id: 'img_' + index,
+                    height: value.size,
+                    width: value.size,
+                    class: 'img-thumbnail'
+                });
+                myImage.prop('src', 'data:' + value.mimetype + ';base64,' + value.thumb);
+                myImage.css({
+                    'cursor': 'pointer',
+                    'border-style': 'solid',
+                    'border-width': '3px',
+                    'border-color': '#2E9AFE'
+                });
+                var myDiv = $('<div>').attr({
+                    id: "imgDiv_" + index
+                }).addClass("col col-lg-3 col-sm-3 col-md-3 col-xs-3 card");
+                $("#div_gridAvatar").append(myDiv);
+                $("#imgDiv_" + index).append(myImage);
+                $("#imgDiv_" + index).append('<div class="card-footer"><i style="cursor: pointer;" class="fa fa-trash" aria-hidden="true" onclick="confirmDeleteAvatar(' + index + ');"></i></div>');
+            });
+
+        }
+    });
+}
+
+function calcIni(stade) {
+    var data, mxImg = 4;
+    switch (stade) {
+        case "ini":
+            data = 0;
+            break;
+        case "left":
+            data = $("#inpt_ini").val() - mxImg;
+            if (data <= 0) {
+                data = 0;
+            }
+            break;
+        case "right":
+            data = parseFloat($("#inpt_ini").val()) + parseFloat(mxImg);
+            break;
+    }
+    $("#inpt_ini").val(data);
+    return mxImg;
 }
