@@ -74,9 +74,9 @@ class ApiRestController extends FOSRestController {
                         ->getRepository("IntrawayAvatarBundle:Emails")->find($this->getRequest()->get('email'));
 
         if (empty($email)) {
-            return array("message" => "Data not found. You can save your data!!!", "img" => $this->imgDefault()->getId());
+            return array("message" => "Data not found. You can save your data!!!", "avatar" => $this->createObjAvatar($this->imgDefault()));
         } else {
-            return array("message" => "Data found", "img" => $email->getIdavatar()->getId());
+            return array("message" => "Data found", "avatar" => $this->createObjAvatar(array($email->getIdavatar())));
         }
     }
 
@@ -92,7 +92,7 @@ class ApiRestController extends FOSRestController {
             $email->setHashmd5($this->getRequest()->get('email'));
         }
 
-        $finalAvatar = empty($avatar) ? $this->imgDefault() : $avatar;
+        $finalAvatar = empty($avatar) ? $this->imgDefault()[0] : $avatar;
         $email->setIdavatar($finalAvatar);
         try {
             $em = $this->getDoctrine()->getManager();
@@ -101,15 +101,15 @@ class ApiRestController extends FOSRestController {
             }
             $em->flush();
         } catch (Exception $ex) {
-            return array("message" => "Error saved image", "img" => $this->imgDefault()->getId());
+            return array("message" => "Error saved image", "avatar" => $this->createObjAvatar($this->imgDefault()));
         }
-        return array("message" => "Image saved correctly", "img" => $finalAvatar->getId());
+        return array("message" => "Image saved correctly", "avatar" => $this->createObjAvatar(array($finalAvatar)));
     }
 
     private function imgDefault() {
         $avatar = $this->getDoctrine()
                         ->getRepository("IntrawayAvatarBundle:Avatars")->findBy(array("name" => 'empty.jpg'));
-        return $avatar[0];
+        return $avatar;
     }
 
     private function showAvatares() {

@@ -114,7 +114,9 @@ $(document).ready(function () {
             success: function (data, textStatus, jqXHR)
             {
                 $("#capaLoad").hide();
-                selectAvatar(data.img);
+                $.each(data.avatar, function (index, value) {
+                    selectAvatar(index, value);
+                });
                 $("#dialogo").html(data.message);
                 $("#dialogo").dialog("open");
 
@@ -148,7 +150,9 @@ $(document).ready(function () {
             success: function (data, textStatus, jqXHR)
             {
                 $("#capaLoad").hide();
-                selectAvatar(data.img);
+                $.each(data.avatar, function (index, value) {
+                    selectAvatar(index, value);
+                });
                 $("#dialogo").html(data.message);
                 $("#dialogo").dialog("open");
 
@@ -159,7 +163,11 @@ $(document).ready(function () {
 
 });
 
-function selectAvatar(id) {
+function selectAvatar(id, avat) {
+    if (typeof objAvatar[id] === "undefined") {
+        objAvatar[id] = avat;
+
+    }
     var avatar = objAvatar[id];
     var imgUsr = $('<img/>');
     imgUsr.prop('src', 'data:' + avatar.mimetype + ';base64,' + avatar.image);
@@ -264,7 +272,7 @@ function showAvatars(mxImg) {
                 var myImage = $('<img/>');
                 myImage.attr({
                     title: 'Name:' + value.name + ', Size File:' + value.sizefile + ', MimeType:' + value.mimetype,
-                    onclick: 'selectAvatar( ' + index + ' );',
+                    onclick: 'selectAvatar( ' + index + ',"" );',
                     id: 'img_' + index,
                     height: value.size,
                     width: value.size,
