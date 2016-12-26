@@ -115,7 +115,7 @@ class ApiRestController extends FOSRestController {
     private function showAvatares() {
         $rows = $this->getDoctrine()
                 ->getRepository("IntrawayAvatarBundle:Avatars")
-                ->findAll();
+                ->findBy(array(), array('id' => 'ASC'), $this->getRequest()->get("mxImg"), $this->getRequest()->get("ini"));
         return empty($rows) ? NULL : $this->createObjAvatar($rows);
     }
 
