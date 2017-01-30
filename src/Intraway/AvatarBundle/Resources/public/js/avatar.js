@@ -170,7 +170,7 @@ function selectAvatar(id, avat) {
     }
     var avatar = objAvatar[id];
     var imgUsr = $('<img/>');
-    imgUsr.prop('src', 'data:' + avatar.mimetype + ';base64,' + avatar.image);
+    imgUsr.prop('src', 'data:' + avatar.mimetype + ';base64,' + avatar.thumb);
 
     imgUsr.attr({
         title: 'Name:' + avatar.name + ', Size File:' + avatar.sizefile + ', MimeType:' + avatar.mimetype,

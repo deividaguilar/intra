@@ -123,7 +123,7 @@ class ApiRestController extends FOSRestController {
         $salida = array();
         foreach ($rows as $arrAvatar) {
             $avatar = [];
-            $avatar['image'] = stream_get_contents($arrAvatar->getImage());
+//            $avatar['image'] = stream_get_contents($arrAvatar->getImage());
             $avatar['mimetype'] = $arrAvatar->getMimetype();
             $avatar['size'] = $arrAvatar->getSize();
             $avatar['sizefile'] = $arrAvatar->getSizefile();
